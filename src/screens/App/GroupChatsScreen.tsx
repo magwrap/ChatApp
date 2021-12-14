@@ -2,17 +2,17 @@ import Center from "@/components/Center";
 import * as React from "react";
 import { Divider, Title } from "react-native-paper";
 
-interface TabOneScreenProps {
+interface GroupChatScreenProps {
   navigation: any;
 }
 
-const TabOneScreen: React.FC<TabOneScreenProps> = ({ navigation }) => {
+const GroupChatScreen: React.FC<GroupChatScreenProps> = ({ navigation }) => {
   return (
     <Center>
-      <Title>Tab One</Title>
+      <Title>Chats</Title>
       <Divider />
     </Center>
   );
 };
 
-export default TabOneScreen;
+export default GroupChatScreen;

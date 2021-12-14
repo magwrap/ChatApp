@@ -1,27 +1,24 @@
 import { ActionType } from "../action-types";
 import { Dispatch } from "redux";
 import { Action } from "../actions";
+import { GoogleUser } from "expo-google-app-auth";
 
-export const addState = (description: string) => {
-  description = "descripiton";
+export const loginUser = (userData: GoogleUser, accessToken: string) => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
-      type: ActionType.ADDED,
+      type: ActionType.LOGIN,
       payload: {
-        description: description,
+        userData,
+        accessToken,
       },
     });
   };
 };
 
-export const removeState = (id: number) => {
-  id = 1;
+export const logoutUser = () => {
   return (dispatch: Dispatch<Action>) => {
     dispatch({
-      type: ActionType.REMOVED,
-      payload: {
-        id: id,
-      },
+      type: ActionType.LOGOUT,
     });
   };
 };

@@ -1,22 +1,16 @@
 import { ActionType } from "../action-types";
+import { GoogleUser } from "expo-google-app-auth";
 
-interface AddedAction {
-  type: ActionType.ADDED;
+interface UserLoginAction {
+  type: ActionType.LOGIN;
   payload: {
-    description: string;
+    userData: GoogleUser;
+    accessToken: string;
   };
 }
 
-interface RemovedAction {
-  type: ActionType.REMOVED;
-  payload: {
-    id: number;
-  };
+interface UserLogoutAction {
+  type: ActionType.LOGOUT;
 }
 
-// type Action = {
-//   type: string;
-//   payload?: any;
-// };
-
-export type Action = AddedAction | RemovedAction;
+export type Action = UserLoginAction | UserLogoutAction;

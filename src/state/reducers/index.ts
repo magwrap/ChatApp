@@ -1,10 +1,11 @@
 import { combineReducers } from "redux";
-import dataReducer from "./dataReducer";
+import userReducer from "./userReducer";
 
 const reducers = combineReducers({
-  data: dataReducer,
+  user: userReducer,
 });
 
 export default reducers;
 
-export type State = ReturnType<typeof reducers>;
+type State = ReturnType<typeof reducers>;
+export { State };

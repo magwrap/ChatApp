@@ -1,4 +1,4 @@
 export enum ActionType {
-  ADDED = "added",
-  REMOVED = "removed",
+  LOGIN = "login",
+  LOGOUT = "logout",
 }

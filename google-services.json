@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "294670819415",
+    "project_id": "chat-app-ee490",
+    "storage_bucket": "chat-app-ee490.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:294670819415:android:03ec32f3ffb1547bfcc312",
+        "android_client_info": {
+          "package_name": "pl.jan.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "294670819415-3v0hk40rcfo00r0fdt40ivpi3mehdqkm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkxbW9bIfVcLOX7FI1CFiJVLDgAK4ODfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "294670819415-3v0hk40rcfo00r0fdt40ivpi3mehdqkm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "294670819415-2h8n5i1p1u3r7uu8q1cneoca1ontofta.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "pl.jan.chat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,10 +10,7 @@ interface USAGEProps {}
 
 const USAGE: React.FC<USAGEProps> = ({}) => {
   const dispatch = useDispatch();
-  const { addState, removeState } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { loginUser } = bindActionCreators(actionCreators, dispatch);
   const data = useSelector((state: State) => state.data);
 
   return <Text>{data}</Text>;

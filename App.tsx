@@ -1,11 +1,17 @@
+import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
+import Routes from "@/navigation/Routes";
 import useCachedResources from "./src/hooks/useCachedResources";
 import { DefaultTheme, Provider as PaperProvider } from "react-native-paper";
-import Routes from "@/navigation/Routes";
-import "react-native-gesture-handler";
-import { Provider } from "react-redux";
+import { Provider as StoreProvider } from "react-redux";
 import { store } from "@/state";
+import LoadingScreen from "@/screens/LoadingScreen";
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs([
+  "Warning: Async Storage has been extracted from react-native core",
+]);
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -14,21 +20,21 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: "tomato",
+      primary: "green",
       accent: "yellow",
     },
   };
 
   if (!isLoadingComplete) {
-    return null;
+    return <LoadingScreen />;
   } else {
     return (
-      <PaperProvider theme={theme}>
-        <Provider store={store}>
+      <StoreProvider store={store}>
+        <PaperProvider theme={theme}>
           <Routes />
           <StatusBar />
-        </Provider>
-      </PaperProvider>
+        </PaperProvider>
+      </StoreProvider>
     );
   }
 }

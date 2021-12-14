@@ -1,8 +1,9 @@
 import React from "react";
 import ModalScreen from "@/screens/App/ModalScreen";
 import NotFoundScreen from "@/screens/App/NotFoundScreen";
-import BottomTabNavigator from "./BottomTabNavigator";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import DrawerNavigator from "./DrawerNavigator";
 
 interface AppStackNavigatorProps {}
 
@@ -13,19 +14,10 @@ const AppStackNavigator: React.FC<AppStackNavigatorProps> = ({}) => {
     <Stack.Navigator>
       <Stack.Screen
         name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
-      />
-      {/* <Stack.Screen
-        name="Root"
-        component={TopTabNavigator}
-        options={{ headerShown: false }}
-      /> */}
-      {/* <Stack.Screen
-        name="Root"
         component={DrawerNavigator}
         options={{ headerShown: false }}
-      /> */}
+      />
+
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}

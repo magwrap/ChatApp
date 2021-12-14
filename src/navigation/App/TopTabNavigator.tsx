@@ -1,7 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import TabOneScreen from "screens/TabOneScreen";
-import TabTwoScreen from "screens/TabTwoScreen";
+import GroupChatScreen from "@/screens/App/GroupChatsScreen";
+import PrivateChatScreen from "@/screens/App/PrivateChatScreen";
 
 interface TopTabNavigatorProps {}
 
@@ -10,22 +10,21 @@ const Tab = createMaterialTopTabNavigator();
 const TopTabNavigator: React.FC<TopTabNavigatorProps> = ({}) => {
   return (
     <Tab.Navigator
-      initialRouteName="Tab1"
+      initialRouteName="GroupChatNavigation"
       screenOptions={{
-        tabBarActiveTintColor: "#e91e63",
-        tabBarItemStyle: { height: 80 },
+        tabBarActiveTintColor: "black",
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { backgroundColor: "powderblue" },
+        tabBarStyle: { backgroundColor: "white" },
       }}>
       <Tab.Screen
-        name="Tab1"
-        component={TabOneScreen}
-        options={{ tabBarLabel: "Tab1" }}
+        name="GroupChatNavigation"
+        component={GroupChatScreen}
+        options={{ tabBarLabel: "Groups" }}
       />
       <Tab.Screen
-        name="Tab2"
-        component={TabTwoScreen}
-        options={{ tabBarLabel: "Tab2" }}
+        name="PrivateChatNavigation"
+        component={PrivateChatScreen}
+        options={{ tabBarLabel: "Private" }}
       />
     </Tab.Navigator>
   );

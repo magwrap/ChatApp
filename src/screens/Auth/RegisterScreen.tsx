@@ -1,17 +1,21 @@
+import Center from "@/components/Center";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, Text } from "react-native-paper";
 
 interface RegisterScreenProps {
   navigation: any;
 }
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ navigation }) => {
+  const goToLogin = () => {
+    navigation.navigate("Login");
+  };
   return (
-    <View>
-      <Text></Text>
-    </View>
+    <Center>
+      <Text>Register Screen</Text>
+      <Button onPress={goToLogin}>Sign In</Button>
+    </Center>
   );
 };
-const styles = StyleSheet.create({});
 
 export default RegisterScreen;
