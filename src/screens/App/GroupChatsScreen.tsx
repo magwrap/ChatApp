@@ -1,17 +1,29 @@
-import Center from "@/components/Center";
 import * as React from "react";
-import { Divider, Title } from "react-native-paper";
+import { View } from "react-native";
+import { Button } from "react-native-paper";
 
 interface GroupChatScreenProps {
   navigation: any;
 }
 
 const GroupChatScreen: React.FC<GroupChatScreenProps> = ({ navigation }) => {
+  const goToBrassGroupScreen = () => {
+    navigation.navigate("BrassGroup");
+  };
+
+  const goToPercussionGroupScreen = () => {
+    navigation.navigate("PercussionGroup");
+  };
+
+  const goToStringGroupScreen = () => {
+    navigation.navigate("StringGroup");
+  };
   return (
-    <Center>
-      <Title>Chats</Title>
-      <Divider />
-    </Center>
+    <View>
+      <Button onPress={goToBrassGroupScreen}>Brass Group</Button>
+      <Button onPress={goToPercussionGroupScreen}>Percussion Group</Button>
+      <Button onPress={goToStringGroupScreen}>String Group</Button>
+    </View>
   );
 };
 

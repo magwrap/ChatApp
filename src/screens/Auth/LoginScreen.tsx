@@ -1,19 +1,22 @@
 import Center from "@/components/Center";
 import React, { useState } from "react";
-import { ActivityIndicator, Button, Text } from "react-native-paper";
+import { ActivityIndicator, Button, Caption, Text } from "react-native-paper";
 import { AntDesign } from "@expo/vector-icons";
 import * as Google from "expo-google-app-auth";
 import { config } from "@/config/googleSigninConfig";
 import { View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import useRedux from "@/hooks/useRedux";
+import { useUsersCollection } from "@/hooks/useFirebase";
 
 interface LoginScreenProps {}
 
 const LoginScreen: React.FC<LoginScreenProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { loginUser } = useRedux();
+  const { addUser } = useUsersCollection();
 
   const handleSignInWithGoogle = async () => {
     setLoading(true);
@@ -23,6 +26,7 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
       if (type == "success") {
         const { user, accessToken } = result;
         if (user && accessToken) {
+          await addUser(user);
           loginUser(user, accessToken);
         } else {
           setLoading(false);
@@ -42,7 +46,10 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
   return (
     <Center>
       {loading ? (
-        <ActivityIndicator size="large" />
+        <Center>
+          <ActivityIndicator size="large" />
+          <Caption>Loading...</Caption>
+        </Center>
       ) : (
         <View>
           <TouchableOpacity

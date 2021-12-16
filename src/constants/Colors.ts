@@ -16,4 +16,8 @@ export default {
     tabIconDefault: "#ccc",
     tabIconSelected: tintColorDark,
   },
+  chat: {
+    green: "green",
+    gray: "gray",
+  },
 };
