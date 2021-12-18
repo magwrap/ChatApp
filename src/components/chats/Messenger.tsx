@@ -81,10 +81,7 @@ const Messenger: React.FC<MessengerProps> = ({
     distanceFromEnd: number;
   }) => {
     if (!onEndReachedCalledDuringMomentum) {
-      console.log("fetching data... distance from end: ", distanceFromEnd);
-
       const size = await getCollectionSize(collectionName);
-      console.log("collection size: ", size);
       if (limitNum !== size) {
         if (limitNum + 25 <= size) {
           setLimitNum(limitNum + 25);
@@ -92,7 +89,6 @@ const Messenger: React.FC<MessengerProps> = ({
           setLimitNum(size);
         }
       }
-      console.log("limit num: ", limitNum);
       setOnEndReachedCalledDuringMomentum(true);
     }
   };
@@ -108,6 +104,7 @@ const Messenger: React.FC<MessengerProps> = ({
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
+          contentOffset={{ x: 0, y: 0 }}
           onEndReached={onEndReached.bind(this)}
           onEndReachedThreshold={0.5}
           onMomentumScrollBegin={() => {

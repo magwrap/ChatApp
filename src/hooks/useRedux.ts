@@ -1,4 +1,5 @@
-import { actionCreators, State } from "@/state";
+import { actionCreators } from "@/state";
+import { State } from "@/state/reducers";
 import { useDispatch, useSelector } from "react-redux";
 import { bindActionCreators } from "redux";
 

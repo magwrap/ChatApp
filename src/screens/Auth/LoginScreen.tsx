@@ -17,7 +17,8 @@ import useRedux from "@/hooks/useRedux";
 import { useUsersCollection } from "@/hooks/useFirebase";
 
 interface LoginScreenProps {}
-
+//TODO: dodac token loop zeby automatycznie logowalo
+//TODO: dodac opcje logowania przez google z poziomu przeglądarki
 const LoginScreen: React.FC<LoginScreenProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);

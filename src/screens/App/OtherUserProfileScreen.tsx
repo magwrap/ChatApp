@@ -7,7 +7,10 @@ import { StyleSheet, Text, View } from "react-native";
 import {
   ActivityIndicator,
   Avatar,
+  Divider,
+  Headline,
   Paragraph,
+  Subheading,
   Title,
 } from "react-native-paper";
 
@@ -32,6 +35,7 @@ const OtherUserProfileScreen: React.FC<OtherUserProfileScreenProps> = ({
   useEffect(() => {
     fetchUser(userId);
   }, [route.params.uid]);
+
   const fetchUser = async (userId: string) => {
     navigation.setOptions({ title: "Loading..." });
     setLoading(true);
@@ -54,12 +58,24 @@ const OtherUserProfileScreen: React.FC<OtherUserProfileScreenProps> = ({
         />
         <Title>{user.name}</Title>
         <Paragraph>{user.email}</Paragraph>
+        <View
+          style={{
+            width: "100%",
+            marginVertical: 10,
+          }}>
+          <Divider />
+        </View>
+        <View style={{ margin: 20 }}>
+          <Headline>Favourite instrument:</Headline>
+          <Subheading style={{ textAlign: "center" }}>
+            {user.favInstrument ? user.favInstrument : "Don't have one"}
+          </Subheading>
+        </View>
       </View>
     </View>
   ) : (
     <ActivityIndicator />
   );
 };
-const styles = StyleSheet.create({});
 
 export default OtherUserProfileScreen;

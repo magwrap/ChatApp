@@ -1,9 +1,9 @@
+import { User } from "@/hooks/useFirebase";
 import { ActionType } from "../action-types";
 import { Action } from "../actions";
-import { GoogleUser } from "expo-google-app-auth";
 
 export type UserState = null | {
-  userData: GoogleUser;
+  userData: User;
   accessToken: string;
 };
 

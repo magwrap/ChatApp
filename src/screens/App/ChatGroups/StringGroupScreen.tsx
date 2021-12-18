@@ -14,7 +14,6 @@ const StringGroupScreen: React.FC<StringGroupScreenProps> = ({
   const [limitNum, setLimitNum] = useState(25);
   const { stringMessages, addMessage, getCollectionSize } =
     useMessagesCollections();
-  //TODO: dodac limitNum
 
   return (
     <View style={{ flex: 1 }}>

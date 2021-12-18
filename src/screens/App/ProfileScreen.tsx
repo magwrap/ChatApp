@@ -2,18 +2,32 @@ import { Avatar, Divider, Paragraph, Title } from "react-native-paper";
 
 import useRedux from "@/hooks/useRedux";
 import { View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useInstrumentsDatabase } from "@/hooks/useFirebase";
+import ViewInstrumentList from "@/components/profile/ViewInstrumentList";
 
-interface ProfilScreenProps {
-  navigation: any;
-}
+interface ProfilScreenProps {}
+//TODO: kazdy uzytkownik ma swoj ulubiony instrument i moze se go ustawic
 
-const ProfileScreen: React.FC<ProfilScreenProps> = ({ navigation }) => {
+const ProfileScreen: React.FC<ProfilScreenProps> = () => {
   const { user } = useRedux();
+  const { getInstruments } = useInstrumentsDatabase();
+  const [instrumentList, setInstrumentList] = useState([""]);
+
   const userData = user?.userData;
 
+  useEffect(() => {
+    fetchInstruments();
+  }, []);
+
+  const fetchInstruments = async () => {
+    const instruments: string[] = await getInstruments();
+
+    setInstrumentList(instruments);
+  };
+
   return (
-    <View style={{ margin: 2 }}>
+    <View style={{ margin: 2, flex: 1 }}>
       {userData && (
         <View
           style={{
@@ -38,6 +52,8 @@ const ProfileScreen: React.FC<ProfilScreenProps> = ({ navigation }) => {
           </View>
         </View>
       )}
+
+      <ViewInstrumentList instrumentList={instrumentList} />
     </View>
   );
 };

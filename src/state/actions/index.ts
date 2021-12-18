@@ -1,10 +1,10 @@
 import { ActionType } from "../action-types";
-import { GoogleUser } from "expo-google-app-auth";
+import { User } from "@/hooks/useFirebase";
 
 interface UserLoginAction {
   type: ActionType.LOGIN;
   payload: {
-    userData: GoogleUser;
+    userData: User;
     accessToken: string;
   };
 }

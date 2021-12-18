@@ -12,7 +12,6 @@ const BrassGroupScreen: React.FC<BrassGroupScreenProps> = ({ navigation }) => {
   const [limitNum, setLimitNum] = useState(25);
   const { brassMessages, addMessage, getCollectionSize } =
     useMessagesCollections();
-  //TODO: dodac limitNum
 
   return (
     <View style={{ flex: 1 }}>

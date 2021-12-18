@@ -9,12 +9,14 @@ import {
   setDoc,
   getDoc,
   getDocs,
+  updateDoc,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
+import { getDatabase, ref, get, child } from "firebase/database";
 
 import { useCollectionData } from "react-firebase-hooks/firestore";
 import { firebaseConfig } from "@/config/firebaseConfig";
-import * as Google from "expo-google-app-auth";
+import { GoogleUser } from "expo-google-app-auth";
 
 initializeApp(firebaseConfig);
 
@@ -27,6 +29,7 @@ export enum collectionNames {
 }
 
 const firestore = getFirestore();
+const database = getDatabase();
 
 const useMessagesCollections = (limitNum = 25) => {
   const messagesRef = collection(firestore, collectionNames.MESSAGES);
@@ -127,40 +130,84 @@ const useMessagesCollections = (limitNum = 25) => {
   };
 };
 
+export type User = GoogleUser & {
+  favInstrument: string;
+};
+
 const useUsersCollection = () => {
   const getUser = async (userId: string) => {
-    const userRef = doc(firestore, collectionNames.USERS, userId);
-    const userSnap = await getDoc(userRef);
+    try {
+      const userRef = doc(firestore, collectionNames.USERS, userId);
+      const userSnap = await getDoc(userRef);
 
-    if (userSnap.exists()) {
-      return userSnap.data();
-    } else {
-      return null;
+      if (userSnap.exists()) {
+        return userSnap.data();
+      } else {
+        return null;
+      }
+    } catch (err) {
+      console.error(err);
     }
+    return null;
   };
 
-  const addUser = async (user: Google.GoogleUser) => {
+  const addUser = async (user: GoogleUser) => {
     if (user.id) {
       try {
-        await setDoc(doc(firestore, collectionNames.USERS, user.id), {
-          email: user.email ? user.email : "",
-          familyName: user.familyName ? user.familyName : "",
-          givenName: user.givenName ? user.givenName : "",
-          name: user.name ? user.name : "",
-          photoURL: user.photoUrl
-            ? user.photoUrl
-            : "https://firebasestorage.googleapis.com/v0/b/chatapp-335019.appspot.com/o/default-non-user-no-photo-1.jpg?alt=media&token=2f33bb92-bed2-48cc-9c9a-d329403b776c",
-        });
+        const userRef = doc(firestore, collectionNames.USERS, user.id);
+        const userSnap = await getDoc(userRef);
+        if (!userSnap.exists()) {
+          await setDoc(doc(firestore, collectionNames.USERS, user.id), {
+            email: user.email ? user.email : "",
+            familyName: user.familyName ? user.familyName : "",
+            givenName: user.givenName ? user.givenName : "",
+            name: user.name ? user.name : "",
+            photoURL: user.photoUrl
+              ? user.photoUrl
+              : "https://firebasestorage.googleapis.com/v0/b/chatapp-335019.appspot.com/o/default-non-user-no-photo-1.jpg?alt=media&token=2f33bb92-bed2-48cc-9c9a-d329403b776c",
+          });
+        }
       } catch (err) {
         console.error(err);
       }
     }
   };
 
+  const updateUser = async (userId: string, updateData: object) => {
+    try {
+      const userRef = doc(firestore, collectionNames.USERS, userId);
+      await updateDoc(userRef, updateData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return {
     getUser,
     addUser,
+    updateUser,
   };
 };
 
-export { useMessagesCollections, useUsersCollection };
+const useInstrumentsDatabase = () => {
+  const dbRef = ref(getDatabase());
+  const getInstruments = async () => {
+    try {
+      const snapshot = await get(child(dbRef, `instruments`));
+      if (snapshot.exists()) {
+        return snapshot.val();
+      } else {
+        return [];
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return [];
+  };
+
+  return {
+    getInstruments,
+  };
+};
+
+export { useMessagesCollections, useUsersCollection, useInstrumentsDatabase };
