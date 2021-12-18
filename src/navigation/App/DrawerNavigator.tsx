@@ -6,6 +6,7 @@ import LogoutButton from "@/components/LogoutButton";
 import ChatHeaderText from "@/components/chats/ChatHeaderText";
 import { Colors } from "react-native-paper";
 import DrawerCustomContent from "./DrawerCustomContent";
+import OtherUserProfileScreen from "@/screens/App/OtherUserProfileScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -14,6 +15,11 @@ interface DrawerNavigatorProps {}
 const DrawerNavigator: React.FC<DrawerNavigatorProps> = ({}) => {
   return (
     <Drawer.Navigator
+      screenOptions={{
+        drawerStyle: {
+          backgroundColor: Colors.white,
+        },
+      }}
       initialRouteName="Chats"
       drawerContent={(props) => <DrawerCustomContent {...props} />}>
       <Drawer.Screen
@@ -34,6 +40,15 @@ const DrawerNavigator: React.FC<DrawerNavigatorProps> = ({}) => {
             backgroundColor: Colors.green300,
           },
           headerRight: () => <LogoutButton />,
+        }}
+      />
+      <Drawer.Screen
+        name="Other User Profile"
+        component={OtherUserProfileScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: Colors.green300,
+          },
         }}
       />
     </Drawer.Navigator>

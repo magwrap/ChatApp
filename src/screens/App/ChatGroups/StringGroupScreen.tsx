@@ -1,9 +1,6 @@
 import Messenger from "@/components/chats/Messenger";
-import {
-  collectionNames,
-  useGroupMessagesCollections,
-} from "@/hooks/useFirebase";
-import React from "react";
+import { collectionNames, useMessagesCollections } from "@/hooks/useFirebase";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
@@ -14,7 +11,10 @@ interface StringGroupScreenProps {
 const StringGroupScreen: React.FC<StringGroupScreenProps> = ({
   navigation,
 }) => {
-  const { stringMessages, addMessage } = useGroupMessagesCollections();
+  const [limitNum, setLimitNum] = useState(25);
+  const { stringMessages, addMessage, getCollectionSize } =
+    useMessagesCollections();
+  //TODO: dodac limitNum
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,7 +22,10 @@ const StringGroupScreen: React.FC<StringGroupScreenProps> = ({
         <Messenger
           messages={stringMessages}
           addMessage={addMessage}
+          limitNum={limitNum}
+          setLimitNum={setLimitNum}
           collectionName={collectionNames.STRING}
+          getCollectionSize={getCollectionSize}
         />
       ) : (
         <ActivityIndicator />

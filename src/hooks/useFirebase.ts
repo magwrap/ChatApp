@@ -8,6 +8,7 @@ import {
   doc,
   setDoc,
   getDoc,
+  getDocs,
 } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 
@@ -27,46 +28,33 @@ export enum collectionNames {
 
 const firestore = getFirestore();
 
-const usePublicMessagesCollection = () => {
+const useMessagesCollections = (limitNum = 25) => {
   const messagesRef = collection(firestore, collectionNames.MESSAGES);
-  const q = query(messagesRef, orderBy("createdAt"), limit(25));
-  const [messages] = useCollectionData(q, { idField: "id" });
-
-  const addMessage = async (text: string, uid: string, photoURL: string) => {
-    try {
-      await addDoc(collection(firestore, collectionNames.MESSAGES), {
-        text,
-        uid,
-        photoURL,
-        createdAt: -1 * new Date().getTime(),
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  return {
-    messages,
-    addMessage,
-  };
-};
-
-const useGroupMessagesCollections = () => {
-  const brassBessagesRef = collection(firestore, collectionNames.BRASS);
-  const percussionBessagesRef = collection(
+  const brassMessagesRef = collection(firestore, collectionNames.BRASS);
+  const percussionMessagesRef = collection(
     firestore,
     collectionNames.PERCUSSION
   );
-  const stringBessagesRef = collection(firestore, collectionNames.STRING);
+  const stringMessagesRef = collection(firestore, collectionNames.STRING);
+  const q = query(messagesRef, orderBy("createdAt"), limit(limitNum));
 
-  const brassQuery = query(brassBessagesRef, orderBy("createdAt"), limit(25));
-  const percussionQuery = query(
-    percussionBessagesRef,
+  const brassQuery = query(
+    brassMessagesRef,
     orderBy("createdAt"),
-    limit(25)
+    limit(limitNum)
   );
-  const stringQuery = query(stringBessagesRef, orderBy("createdAt"), limit(25));
+  const percussionQuery = query(
+    percussionMessagesRef,
+    orderBy("createdAt"),
+    limit(limitNum)
+  );
+  const stringQuery = query(
+    stringMessagesRef,
+    orderBy("createdAt"),
+    limit(limitNum)
+  );
 
+  const [messages] = useCollectionData(q, { idField: "id" });
   const [brassMessages] = useCollectionData(brassQuery, { idField: "id" });
   const [percussionMessages] = useCollectionData(percussionQuery, {
     idField: "id",
@@ -83,6 +71,7 @@ const useGroupMessagesCollections = () => {
       | collectionNames.BRASS
       | collectionNames.PERCUSSION
       | collectionNames.STRING
+      | collectionNames.MESSAGES
   ) => {
     try {
       await addDoc(collection(firestore, collectionName), {
@@ -96,11 +85,45 @@ const useGroupMessagesCollections = () => {
     }
   };
 
+  const getCollectionSize = async (
+    collectionName:
+      | collectionNames.BRASS
+      | collectionNames.PERCUSSION
+      | collectionNames.STRING
+      | collectionNames.MESSAGES
+  ) => {
+    let collectionSize = 0;
+    switch (collectionName) {
+      case collectionNames.MESSAGES:
+        const messagesSnap = await getDocs(messagesRef);
+        collectionSize = messagesSnap.size;
+        break;
+
+      case collectionNames.BRASS:
+        const brassSnap = await getDocs(brassMessagesRef);
+        collectionSize = brassSnap.size;
+        break;
+
+      case collectionNames.PERCUSSION:
+        const percussionSnap = await getDocs(percussionMessagesRef);
+        collectionSize = percussionSnap.size;
+        break;
+
+      case collectionNames.STRING:
+        const stringSnap = await getDocs(stringMessagesRef);
+        collectionSize = stringSnap.size;
+        break;
+    }
+    return collectionSize;
+  };
+
   return {
+    messages,
     brassMessages,
     percussionMessages,
     stringMessages,
     addMessage,
+    getCollectionSize,
   };
 };
 
@@ -118,7 +141,6 @@ const useUsersCollection = () => {
 
   const addUser = async (user: Google.GoogleUser) => {
     if (user.id) {
-      console.log("adding user: ", user);
       try {
         await setDoc(doc(firestore, collectionNames.USERS, user.id), {
           email: user.email ? user.email : "",
@@ -141,8 +163,4 @@ const useUsersCollection = () => {
   };
 };
 
-export {
-  usePublicMessagesCollection,
-  useGroupMessagesCollections,
-  useUsersCollection,
-};
+export { useMessagesCollections, useUsersCollection };

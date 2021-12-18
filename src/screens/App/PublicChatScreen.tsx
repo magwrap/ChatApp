@@ -1,17 +1,24 @@
 import Messenger from "@/components/chats/Messenger";
-import { usePublicMessagesCollection } from "@/hooks/useFirebase";
+import { collectionNames, useMessagesCollections } from "@/hooks/useFirebase";
 import * as React from "react";
+import { useState } from "react";
 import { ActivityIndicator } from "react-native-paper";
 
-interface PublicChatScreenProps {
-  navigation: any;
-}
+interface PublicChatScreenProps {}
 
-const PublicChatScreen: React.FC<PublicChatScreenProps> = ({ navigation }) => {
-  const { messages, addMessage } = usePublicMessagesCollection();
-  // console.log(messages);
+const PublicChatScreen: React.FC<PublicChatScreenProps> = () => {
+  const [limitNum, setLimitNum] = useState(25);
+  const { messages, addMessage, getCollectionSize } =
+    useMessagesCollections(limitNum);
   return messages ? (
-    <Messenger messages={messages} addMessage={addMessage} />
+    <Messenger
+      messages={messages}
+      addMessage={addMessage}
+      limitNum={limitNum}
+      setLimitNum={setLimitNum}
+      getCollectionSize={getCollectionSize}
+      collectionName={collectionNames.MESSAGES}
+    />
   ) : (
     <ActivityIndicator />
   );

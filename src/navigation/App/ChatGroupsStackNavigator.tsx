@@ -1,4 +1,5 @@
 import GroupChatHeader from "@/components/chats/GroupChatHeader";
+import { questionOfTheDay } from "@/config/questionOfTheDay";
 import BrassGroupScreen from "@/screens/App/ChatGroups/BrassGroupScreen";
 import PercussionGroupScreen from "@/screens/App/ChatGroups/PercussionGroupScreen";
 import StringGroupScreen from "@/screens/App/ChatGroups/StringGroupScreen";
@@ -24,7 +25,9 @@ const ChatGroupsStackNavigator: React.FC<ChatGroupsStackNavigatorProps> =
           name="BrassGroup"
           component={BrassGroupScreen}
           options={{
-            header: () => <GroupChatHeader desc="Let's talk about Brasses!" />,
+            header: () => (
+              <GroupChatHeader desc={questionOfTheDay.brassQuestion} />
+            ),
           }}
         />
 
@@ -33,7 +36,7 @@ const ChatGroupsStackNavigator: React.FC<ChatGroupsStackNavigatorProps> =
           component={PercussionGroupScreen}
           options={{
             header: () => (
-              <GroupChatHeader desc="Electronic or acustic drums?" />
+              <GroupChatHeader desc={questionOfTheDay.percussionQuestion} />
             ),
           }}
         />
@@ -42,7 +45,9 @@ const ChatGroupsStackNavigator: React.FC<ChatGroupsStackNavigatorProps> =
             name="StringGroup"
             component={StringGroupScreen}
             options={{
-              header: () => <GroupChatHeader desc="Pick or free hand?" />,
+              header: () => (
+                <GroupChatHeader desc={questionOfTheDay.stringQuestion} />
+              ),
             }}
           />
         </Stack.Group>

@@ -25,8 +25,8 @@ export default function App() {
     ...DefaultTheme,
     colors: {
       ...DefaultTheme.colors,
-      primary: Colors.brown500,
-      accent: Colors.green400,
+      primary: Colors.green400,
+      accent: Colors.brown500,
     },
   };
 

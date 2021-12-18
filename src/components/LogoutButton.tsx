@@ -2,7 +2,7 @@ import { config } from "@/config/googleSigninConfig";
 import useRedux from "@/hooks/useRedux";
 import React, { useState } from "react";
 import * as Google from "expo-google-app-auth";
-import { ActivityIndicator, Button } from "react-native-paper";
+import { ActivityIndicator, Button, Colors } from "react-native-paper";
 import { View } from "react-native";
 
 interface LogoutButtonProps {}
@@ -30,7 +30,9 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({}) => {
       <ActivityIndicator />
     </View>
   ) : (
-    <Button onPress={logout}>Logout</Button>
+    <Button onPress={logout} color={Colors.brown600}>
+      Logout
+    </Button>
   );
 };
 

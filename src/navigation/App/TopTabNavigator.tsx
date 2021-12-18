@@ -15,7 +15,7 @@ const TopTabNavigator: React.FC<TopTabNavigatorProps> = ({}) => {
       screenOptions={{
         tabBarActiveTintColor: "black",
         tabBarLabelStyle: { fontSize: 12 },
-        tabBarStyle: { borderTopWidth: 0.2, backgroundColor: Colors.green100 },
+        tabBarStyle: { borderTopWidth: 0.2, backgroundColor: Colors.white },
         tabBarPressColor: Colors.brown200,
         tabBarIndicatorStyle: { backgroundColor: Colors.brown200 },
       }}>
@@ -27,7 +27,7 @@ const TopTabNavigator: React.FC<TopTabNavigatorProps> = ({}) => {
       <Tab.Screen
         name="PublicChatScreen"
         component={PublicChatScreen}
-        options={{ tabBarLabel: "Public" }}
+        options={{ tabBarLabel: "All Chat" }}
       />
     </Tab.Navigator>
   );

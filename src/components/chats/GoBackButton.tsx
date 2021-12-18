@@ -2,13 +2,13 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { IconButton } from "react-native-paper";
 
-interface GotoGroupChatButtonProps {}
+interface GoBackButtonProps {}
 
-const GotoGroupChatButton: React.FC<GotoGroupChatButtonProps> = ({}) => {
+const GoBackButton: React.FC<GoBackButtonProps> = ({}) => {
   const navigation = useNavigation();
   const goToChatGroupScreen = () => {
-    navigation.navigate("GroupChat");
+    navigation.goBack();
   };
   return <IconButton icon="arrow-left" onPress={goToChatGroupScreen} />;
 };
-export default GotoGroupChatButton;
+export default GoBackButton;

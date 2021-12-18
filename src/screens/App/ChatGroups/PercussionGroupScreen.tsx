@@ -1,20 +1,15 @@
 import Messenger from "@/components/chats/Messenger";
-import {
-  collectionNames,
-  useGroupMessagesCollections,
-} from "@/hooks/useFirebase";
-import React from "react";
+import { collectionNames, useMessagesCollections } from "@/hooks/useFirebase";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
 
-interface PercussionGroupScreenProps {
-  navigation: any;
-}
+interface PercussionGroupScreenProps {}
 
-const PercussionGroupScreen: React.FC<PercussionGroupScreenProps> = ({
-  navigation,
-}) => {
-  const { percussionMessages, addMessage } = useGroupMessagesCollections();
+const PercussionGroupScreen: React.FC<PercussionGroupScreenProps> = ({}) => {
+  const [limitNum, setLimitNum] = useState(25);
+  const { percussionMessages, addMessage, getCollectionSize } =
+    useMessagesCollections(limitNum);
 
   return (
     <View style={{ flex: 1 }}>
@@ -22,7 +17,10 @@ const PercussionGroupScreen: React.FC<PercussionGroupScreenProps> = ({
         <Messenger
           messages={percussionMessages}
           addMessage={addMessage}
+          limitNum={limitNum}
+          setLimitNum={setLimitNum}
           collectionName={collectionNames.PERCUSSION}
+          getCollectionSize={getCollectionSize}
         />
       ) : (
         <ActivityIndicator />

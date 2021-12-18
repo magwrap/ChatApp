@@ -1,18 +1,18 @@
 import Messenger from "@/components/chats/Messenger";
-import {
-  collectionNames,
-  useGroupMessagesCollections,
-} from "@/hooks/useFirebase";
-import React from "react";
+import { collectionNames, useMessagesCollections } from "@/hooks/useFirebase";
+import React, { useState } from "react";
 import { View } from "react-native";
-import { ActivityIndicator, Subheading } from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 
 interface BrassGroupScreenProps {
   navigation: any;
 }
 
 const BrassGroupScreen: React.FC<BrassGroupScreenProps> = ({ navigation }) => {
-  const { brassMessages, addMessage } = useGroupMessagesCollections();
+  const [limitNum, setLimitNum] = useState(25);
+  const { brassMessages, addMessage, getCollectionSize } =
+    useMessagesCollections();
+  //TODO: dodac limitNum
 
   return (
     <View style={{ flex: 1 }}>
@@ -20,7 +20,10 @@ const BrassGroupScreen: React.FC<BrassGroupScreenProps> = ({ navigation }) => {
         <Messenger
           messages={brassMessages}
           addMessage={addMessage}
+          limitNum={limitNum}
+          setLimitNum={setLimitNum}
           collectionName={collectionNames.BRASS}
+          getCollectionSize={getCollectionSize}
         />
       ) : (
         <ActivityIndicator />
