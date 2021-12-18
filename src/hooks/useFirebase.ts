@@ -162,9 +162,7 @@ const useUsersCollection = () => {
             familyName: user.familyName ? user.familyName : "",
             givenName: user.givenName ? user.givenName : "",
             name: user.name ? user.name : "",
-            photoURL: user.photoUrl
-              ? user.photoUrl
-              : "https://firebasestorage.googleapis.com/v0/b/chatapp-335019.appspot.com/o/default-non-user-no-photo-1.jpg?alt=media&token=2f33bb92-bed2-48cc-9c9a-d329403b776c",
+            photoURL: user.photoUrl ? user.photoUrl : "",
           });
         }
       } catch (err) {

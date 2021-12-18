@@ -47,15 +47,15 @@ const OtherUserProfileScreen: React.FC<OtherUserProfileScreenProps> = ({
     }
   };
 
+  const avatar = user?.photoURL
+    ? { uri: user?.photoURL }
+    : require("../../../assets/images/no-user.jpg");
+
   return user && !loading ? (
     <View>
       <GoBackButton />
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Avatar.Image
-          size={104}
-          source={{ uri: user.photoURL }}
-          style={{ marginRight: 10 }}
-        />
+        <Avatar.Image size={104} source={avatar} style={{ marginRight: 10 }} />
         <Title>{user.name}</Title>
         <Paragraph>{user.email}</Paragraph>
         <View

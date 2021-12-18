@@ -34,15 +34,15 @@ const DrawerCustomContent = (props: DrawerContentComponentProps) => {
       setLoading(false);
     }
   };
+
+  const avatar = user?.userData.photoUrl
+    ? { uri: user?.userData.photoUrl }
+    : require("../../../assets/images/no-user.jpg");
   return (
     <View style={{ flex: 1 }}>
       <DrawerContentScrollView {...props}>
         <View style={styles.userInfo}>
-          <Avatar.Image
-            size={48}
-            source={{ uri: user?.userData.photoUrl }}
-            style={{ marginRight: 10 }}
-          />
+          <Avatar.Image size={48} source={avatar} style={{ marginRight: 10 }} />
           <View style={{ justifyContent: "center", alignItems: "center" }}>
             <Paragraph style={{ fontSize: 18, textAlign: "center" }}>
               {user?.userData.name}

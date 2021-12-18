@@ -26,6 +26,10 @@ const ProfileScreen: React.FC<ProfilScreenProps> = () => {
     setInstrumentList(instruments);
   };
 
+  const avatar = userData?.photoUrl
+    ? { uri: userData.photoUrl }
+    : require("../../../assets/images/no-user.jpg");
+
   return (
     <View style={{ margin: 2, flex: 1 }}>
       {userData && (
@@ -37,7 +41,7 @@ const ProfileScreen: React.FC<ProfilScreenProps> = () => {
           }}>
           <Avatar.Image
             size={104}
-            source={{ uri: userData.photoUrl }}
+            source={avatar}
             style={{ marginRight: 10 }}
           />
           <Title>{userData.name}</Title>

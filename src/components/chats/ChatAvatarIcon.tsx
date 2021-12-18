@@ -21,6 +21,10 @@ const ChatAvatarIcon: React.FC<ChatAvatarIconProps> = ({ photoURL, uid }) => {
     navigate("Other User Profile", { uid });
   };
 
+  const avatar = photoURL
+    ? { uri: photoURL }
+    : require("../../../assets/images/no-user.jpg");
+
   return (
     <View>
       <View
@@ -34,7 +38,7 @@ const ChatAvatarIcon: React.FC<ChatAvatarIconProps> = ({ photoURL, uid }) => {
           onDismiss={closeMenu}
           anchor={
             <TouchableOpacity onPress={openMenu}>
-              <Avatar.Image size={29} source={{ uri: photoURL }} />
+              <Avatar.Image size={29} source={avatar} />
             </TouchableOpacity>
           }>
           <Menu.Item

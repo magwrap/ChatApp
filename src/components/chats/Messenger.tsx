@@ -3,7 +3,7 @@ import useRedux from "@/hooks/useRedux";
 import { DocumentData } from "firebase/firestore";
 import React, { useRef, useState } from "react";
 import { Data } from "react-firebase-hooks/firestore/dist/firestore/types";
-import { RefreshControl, View } from "react-native";
+import { Platform, RefreshControl, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import { TextInput } from "react-native-paper";
 import ChatMessage from "./ChatMessage";
@@ -100,7 +100,7 @@ const Messenger: React.FC<MessengerProps> = ({
           data={messages}
           renderItem={renderItem}
           keyExtractor={(message) => message.id}
-          inverted={true}
+          inverted={Platform.OS !== "web" ? true : false}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -117,10 +117,14 @@ const Messenger: React.FC<MessengerProps> = ({
           width: "100%",
         }}>
         <TextInput
-          label="Send a message"
+          label={
+            Platform.OS !== "web"
+              ? "Send a message"
+              : "You can't send anything if you are using a web browser"
+          }
           value={messageValue}
           onChangeText={setMessageValue}
-          disabled={loading}
+          disabled={loading || Platform.OS === "web"}
           right={<TextInput.Icon name="send" onPress={sendMessage} />}
         />
       </View>

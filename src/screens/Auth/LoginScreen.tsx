@@ -11,14 +11,14 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 import * as Google from "expo-google-app-auth";
 import { config } from "@/config/googleSigninConfig";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import useRedux from "@/hooks/useRedux";
 import { useUsersCollection } from "@/hooks/useFirebase";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
 interface LoginScreenProps {}
 //TODO: dodac token loop zeby automatycznie logowalo
-//TODO: dodac opcje logowania przez google z poziomu przeglądarki
 const LoginScreen: React.FC<LoginScreenProps> = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,51 @@ const LoginScreen: React.FC<LoginScreenProps> = () => {
   const { loginUser } = useRedux();
   const { addUser } = useUsersCollection();
 
-  const handleSignInWithGoogle = async () => {
+  const handleSignInWithGoogle = () => {
+    if (Platform.OS === "web") {
+      GoogleSignInWeb();
+    } else {
+      GoogleSignInMobile();
+    }
+  };
+
+  const GoogleSignInWeb = async () => {
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    const auth = getAuth();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      if (result) {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const accessToken = credential?.accessToken;
+        const user = result.user;
+        if (user && accessToken) {
+          await addUser({
+            email: user.email ? user.email : "",
+            name: user.displayName ? user.displayName : "",
+            id: user.uid,
+          });
+          loginUser(
+            {
+              email: user.email ? user.email : "",
+              name: user.displayName ? user.displayName : "",
+              id: user.uid,
+            },
+            accessToken ? accessToken : ""
+          );
+        }
+      } else {
+        setLoading(false);
+        setErrorMessage("Google signin was cancelled");
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      setErrorMessage("An error accured. Check your network and try again");
+    }
+  };
+
+  const GoogleSignInMobile = async () => {
     setLoading(true);
     try {
       const result = await Google.logInAsync(config);
