@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "instru-chat",
+    "name": "InstruChat",
     "slug": "InstruChat",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/logo.jpg",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/logo2.jpg",
+      "image": "./assets/images/logo2.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,6 +19,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "pl.jan.chat",
+      "buildNumber": "1.0.0",
       "config": {
         "googleSignIn": {
           "reservedClientId": "<com.googleusercontent.apps.294670819415-2h8n5i1p1u3r7uu8q1cneoca1ontofta>"
@@ -30,7 +31,6 @@
       "package": "pl.jan.chat",
       "versionCode": 1,
       "googleServicesFile": "./google-services.json",
-
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/Music-Guitar-icon.png",
         "backgroundColor": "#ffffff"
@@ -38,6 +38,7 @@
     },
     "web": {
       "favicon": "./assets/images/Music-Guitar-icon.png"
-    }
+    },
+    "description": "A chat where you can chat about your favorite instruments!"
   }
 }
