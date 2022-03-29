@@ -1,8 +1,2 @@
-# expo-template
-Template to copy and work with
-contains:
-- react-native-paper
-- redux
-- typescript
-- firebase
-- react-navigation
+# Insruments Chat
+An app where you can chat with your friends about instruments.
